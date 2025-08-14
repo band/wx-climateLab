@@ -5,25 +5,41 @@ co2mmtrends ()
     : run:  source co2mmtrends.sh
     : to see the "canonical format", declare -f co2mmtrends
     : date: 2025-02-11 -- set curl connection timeout
+    : date: 2025-08-14 -- display monthly trend data
     set -- https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_gl.txt
     local df=$(basename $1)
     curl --connect-timeout 5 -q $1 | tr -s ' ' > $df || { echo curl error 1>&2; return 1; }
     :
-    set -- $(tail -n 1 $df) && yr=$1 && mo=$2 && dy=$3
+    set -- $(tail -n 1 $df) && yr=$1 && mo=$2
     :
-    grep "$yr $mo $dy " $df | awk '
-    BEGIN { fmt = "Latest (%s-%02d-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
-          {  printf( fmt, $1, $2, $3, $5 )
+    grep "$yr $mo " $df | awk '
+    BEGIN { fmt = "Latest (%s-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
+          {  printf( fmt, $1, $2, $6 )
           }
 '
-    grep "$(($yr-1)) $mo $dy " $df | awk '
-    BEGIN { fmt = "One year ago (%s-%02d-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
-          {  printf( fmt, $1, $2, $3, $5 )
+    grep "$(($yr-1)) $mo " $df | awk '
+    BEGIN { fmt = "One year ago (%s-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
+          {  printf( fmt, $1, $2, $6 )
           }
 '
-    grep "$(($yr-10)) $mo $dy " $df | awk '
-    BEGIN { fmt = "Ten years ago (%s-%02d-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
-          {  printf( fmt, $1, $2, $3, $5 )
+    grep "$(($yr-10)) $mo " $df | awk '
+    BEGIN { fmt = "Ten years ago (%s-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
+          {  printf( fmt, $1, $2, $6 )
+          }
+'
+    grep "$(($yr-20)) $mo " $df | awk '
+    BEGIN { fmt = "Twenty years ago (%s-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
+          {  printf( fmt, $1, $2, $6 )
+          }
+'
+    grep "$(($yr-30)) $mo " $df | awk '
+    BEGIN { fmt = "Thirty years ago (%s-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
+          {  printf( fmt, $1, $2, $6 )
+          }
+'
+    grep "$(($yr-40)) $mo " $df | awk '
+    BEGIN { fmt = "Forty years ago (%s-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
+          {  printf( fmt, $1, $2, $6 )
           }
 '
     rm $df
