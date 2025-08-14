@@ -1,0 +1,27 @@
+#
+# macOS
+*.DS_Store
+.DS_Store
+
+# Python
+venv/
+__pycache__/
+
+# misc dev
+*.o
+*.so
+*.log
+.vscode/
+
+# misc auth
+env.sh
+stenv.sh
+.env
+*.secret
+
+# misc data files
+*.wav
+*.au
+*.jpeg
+*.png
+
