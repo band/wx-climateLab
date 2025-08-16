@@ -11,6 +11,7 @@ latestco2 ()
     : date: 2025-04-22 -- use Scripps MLO ASCII text data file; replace OCR code;
     : date: 2025-04-26 -- make iso_date an internal fn;
     : date: 2025-08-05 -- try NOAA MLO if Scripps fails;
+    : date: 2025-08-16 -- format output
     iso_date() {
 	: convert DD-Mon-YYYY to ISO 8601 format YYYY-MM-DD;
 	set -- $(echo $1 | sed 's/-/ /g')
@@ -45,7 +46,7 @@ latestco2 ()
     set -- $1 $(basename $1)
     curl -q $1 > $2 || { echo curl error 1>&2; return 1; }
     tail -n 1 $2 | awk '
-    BEGIN { fmt = "Latest (%s-%02d-%02d) NOAA Mauna Loa Observatory co2 value: %s ppm\n" }
+    BEGIN { fmt = "Latest (%s-%02d-%02d) NOAA Mauna Loa Observatory co2 value:    %s ppm\n" }
           { printf( fmt, $1, $2, $3, $5 ) }
     '
     rm $(basename $1)

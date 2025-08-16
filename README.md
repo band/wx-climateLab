@@ -2,8 +2,7 @@
 
 
 ## 2024-02-25
- - find the data files for NOAA global co2 trends and the NOAA Mauna
-   Loa daily readings  
+ - find the data files for NOAA global co2 trends and the NOAA Mauna Loa daily readings  
  - the data files can be found here:  
    https://gml.noaa.gov/ccgg/trends/data.html  
    

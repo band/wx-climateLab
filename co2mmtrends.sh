@@ -13,7 +13,7 @@ co2mmtrends ()
     set -- $(tail -n 1 $df) && yr=$1 && mo=$2
     :
     grep "$yr $mo " $df | awk '
-    BEGIN { fmt = "Latest (%s-%02d) average monthly global co2 trend value (NOAA):\t\t  %s ppm\n" } 
+    BEGIN { fmt = "\nLatest (%s-%02d) average monthly global co2 trend value (NOAA):\t\t  %s ppm\n" } 
           {  printf( fmt, $1, $2, $6 )
           }
 '
@@ -23,22 +23,22 @@ co2mmtrends ()
           }
 '
     grep "$(($yr-10)) $mo " $df | awk '
-    BEGIN { fmt = "\nTen years ago (%s-%02d) average monthly global co2 trend value (NOAA): \t  %s ppm\n" } 
+    BEGIN { fmt = "Ten years ago (%s-%02d) average monthly global co2 trend value (NOAA): \t  %s ppm\n" } 
           {  printf( fmt, $1, $2, $6 )
           }
 '
     grep "$(($yr-20)) $mo " $df | awk '
-    BEGIN { fmt = "\nTwenty years ago (%s-%02d) average monthly global co2 trend value (NOAA): %s ppm\n" } 
+    BEGIN { fmt = "Twenty years ago (%s-%02d) average monthly global co2 trend value (NOAA): %s ppm\n" } 
           {  printf( fmt, $1, $2, $6 )
           }
 '
     grep "$(($yr-30)) $mo " $df | awk '
-    BEGIN { fmt = "\nThirty years ago (%s-%02d) average monthly global co2 trend value (NOAA): %s ppm\n" } 
+    BEGIN { fmt = "Thirty years ago (%s-%02d) average monthly global co2 trend value (NOAA): %s ppm\n" } 
           {  printf( fmt, $1, $2, $6 )
           }
 '
     grep "$(($yr-40)) $mo " $df | awk '
-    BEGIN { fmt = "\nForty years ago (%s-%02d) average monthly global co2 trend value (NOAA):  %s ppm\n" } 
+    BEGIN { fmt = "Forty years ago (%s-%02d) average monthly global co2 trend value (NOAA):  %s ppm\n\n" } 
           {  printf( fmt, $1, $2, $6 )
           }
 '

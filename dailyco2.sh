@@ -14,7 +14,7 @@ dailyco2 ()
     :
     tail -n 1 $2 | awk '
 
-    BEGIN { fmt = "Latest (%s-%02d-%02d) NOAA average global co2 value: %s ppm\n" }
+    BEGIN { fmt = "\nLatest (%s-%02d-%02d) NOAA average global co2 value: %s ppm\n\n" }
           { printf( fmt, $1, $2, $3, $4 ) }
     '
     rm $(basename $1)

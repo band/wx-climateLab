@@ -10,7 +10,7 @@ latestnoaaco2 ()
     set -- $1 $(basename $1)
     curl -q $1 > $2 || { echo curl error 1>&2; return 1; }
     tail -n 1 $2 | awk '
-    BEGIN { fmt = "Latest (%s-%02d-%02d) NOAA Mauna Loa Observatory co2 value: %s ppm\n" }
+    BEGIN { fmt = "\nLatest (%s-%02d-%02d) NOAA Mauna Loa Observatory co2 value: %s ppm\n\n" }
           { printf( fmt, $1, $2, $3, $5 ) }
     '
     rm $(basename $1)
