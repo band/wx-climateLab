@@ -1,0 +1,11 @@
+# climate data functions
+# display co2 and ch4 data
+ghgnow () {
+	echo
+	source ~/bin/latestco2.sh
+	echo
+	source ~/bin/co2trends.sh
+	echo
+	source ~/bin/gosatghg.sh
+	echo
+}
