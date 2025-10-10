@@ -40,14 +40,17 @@ def extract_table_from_noaa_webpage():
                 if table:
                     logger.info('Table found!')
                     # Extract table data as a list of lists
-                    table_data = [[cell.get_text(strip=True) for cell in row.find_all(['td', 'th'])] for row in table.find_all('tr')]
-                    data_row = next((row for row in table_data if len(row) >= 2 and 'Unavailable' not in row[1]), None)
+#                    table_data = [[cell.get_text(strip=True) for cell in row.find_all(['td', 'th'])] for row in table.find_all('tr')]
+#                    data_row = next((row for row in table_data if len(row) >= 2 and 'Unavailable' not in row[1]), None)
+
+                    data_row = next((row_data for row in table.find_all('tr')
+                                     if len(row_data := [cell.get_text(strip=True) for cell in row.find_all(['td', 'th'])]) >= 2
+                                     and 'Unavailable' not in row_data[1]), None)
                     logger.debug(f"data_row: {data_row}")
 
                     return {
                         'html': str(table),
-                        'data': table_data,
-                        'value': data_row,
+                        'data': data_row,
                         'date': tablebox_div.find('span').get_text(strip=True)
                     }
                 else:
@@ -77,7 +80,7 @@ def main():
         logger.debug(result['html'][:500])
         
         print('\n--- Latest Data ---')
-        print(result['value'])
+        print(result['data'])
         print(result['date'])
     else:
         logger.error('Failed to extract table')
