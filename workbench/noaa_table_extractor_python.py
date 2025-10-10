@@ -40,15 +40,10 @@ def extract_table_from_noaa_webpage():
                 if table:
                     logger.info('Table found!')
                     # Extract table data as a list of lists
-                    table_data = []
-                    rows = table.find_all('tr')
-                    
-                    for row in rows:
-                        cells = row.find_all(['td', 'th'])
-                        row_data = [cell.get_text(strip=True) for cell in cells]
-                        table_data.append(row_data)
-
+                    table_data = [[cell.get_text(strip=True) for cell in row.find_all(['td', 'th'])] for row in table.find_all('tr')]
                     data_row = next((row for row in table_data if len(row) >= 2 and 'Unavailable' not in row[1]), None)
+                    logger.debug(f"data_row: {data_row}")
+
                     return {
                         'html': str(table),
                         'data': table_data,
