@@ -33,10 +33,10 @@ def extract_table_from_noaa_webpage():
         main_div = soup.find('div', id='main')
         if main_div:
             # Find the element with class "card-body" inside main
-            card_body = main_div.find(class_='card-body')
-            if card_body:
+            tablebox_div = main_div.find(class_='colored_box')
+            if tablebox_div:
                 # Find the table inside card-body
-                table = card_body.find('table')
+                table = tablebox_div.find('table')
                 if table:
                     logger.info('Table found!')
                     # Extract table data as a list of lists
@@ -51,6 +51,7 @@ def extract_table_from_noaa_webpage():
                     return {
                         'html': str(table),
                         'data': table_data,
+                        'date': tablebox_div.find('span').get_text(strip=True)
                     }
                 else:
                     logger.error('Table not found in card-body')
@@ -82,6 +83,7 @@ def main():
         table_rows=result['data'][:5]
         data_row = next((row for row in table_rows if len(row) >= 2 and 'Unavailable' not in row[1]), None)
         print(data_row)
+        print(result['date'])
     else:
         logger.error('Failed to extract table')
     
