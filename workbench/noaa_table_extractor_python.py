@@ -38,25 +38,24 @@ def extract_table_from_noaa_webpage():
                 # Find the table in the colored_box
                 table = tablebox_div.find('table')
                 if table:
-                    logger.info('Table found!')
-                    # Extract table data as a list of lists
-#                    table_data = [[cell.get_text(strip=True) for cell in row.find_all(['td', 'th'])] for row in table.find_all('tr')]
-#                    data_row = next((row for row in table_data if len(row) >= 2 and 'Unavailable' not in row[1]), None)
+                    logger.debug('Table found!')
+                    logger.debug('\n--- Table HTML (first 500 chars) ---')
+                    logger.debug(str(table)[:500])
 
+                    # Extract first row with available data
                     data_row = next((row_data for row in table.find_all('tr')
                                      if len(row_data := [cell.get_text(strip=True) for cell in row.find_all(['td', 'th'])]) >= 2
                                      and 'Unavailable' not in row_data[1]), None)
                     logger.debug(f"data_row: {data_row}")
 
                     return {
-                        'html': str(table),
                         'data': data_row,
                         'date': tablebox_div.find('span').get_text(strip=True)
                     }
                 else:
-                    logger.error('Table not found in card-body')
+                    logger.error('Table not found in tablebox_div')
             else:
-                logger.error('card-body not found in main div')
+                logger.error('colored_box not found in main div')
         else:
             logger.error('main div not found')
         
@@ -66,20 +65,10 @@ def extract_table_from_noaa_webpage():
         print(f'Error fetching data: {e}')
         return None
 
-
-def save_to_csv(df, filename='noaa_co2_data.csv'):
-    """Save the DataFrame to a CSV file."""
-    df.to_csv(filename, index=False)
-    print(f'Data saved to {filename}')
-
 def main():
     result = extract_table_from_noaa_webpage()
-    
     if result:
-        logger.debug('\n--- Table HTML (first 500 chars) ---')
-        logger.debug(result['html'][:500])
-        
-        print('\n--- Latest Data ---')
+        print('\n--- Latest NOAA MLO daily co2 data ---')
         print(result['data'])
         print(result['date'])
     else:
