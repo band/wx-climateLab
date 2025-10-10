@@ -32,10 +32,10 @@ def extract_table_from_noaa_webpage():
         # Find the div with id="main"
         main_div = soup.find('div', id='main')
         if main_div:
-            # Find the element with class "card-body" inside main
+            # Find the element with class "colored_box" inside main
             tablebox_div = main_div.find(class_='colored_box')
             if tablebox_div:
-                # Find the table inside card-body
+                # Find the table in the colored_box
                 table = tablebox_div.find('table')
                 if table:
                     logger.info('Table found!')
@@ -47,10 +47,12 @@ def extract_table_from_noaa_webpage():
                         cells = row.find_all(['td', 'th'])
                         row_data = [cell.get_text(strip=True) for cell in cells]
                         table_data.append(row_data)
-                    
+
+                    data_row = next((row for row in table_data if len(row) >= 2 and 'Unavailable' not in row[1]), None)
                     return {
                         'html': str(table),
                         'data': table_data,
+                        'value': data_row,
                         'date': tablebox_div.find('span').get_text(strip=True)
                     }
                 else:
@@ -79,10 +81,8 @@ def main():
         logger.debug('\n--- Table HTML (first 500 chars) ---')
         logger.debug(result['html'][:500])
         
-        print('\n--- Table Data (first 5 rows) ---')
-        table_rows=result['data'][:5]
-        data_row = next((row for row in table_rows if len(row) >= 2 and 'Unavailable' not in row[1]), None)
-        print(data_row)
+        print('\n--- Latest Data ---')
+        print(result['value'])
         print(result['date'])
     else:
         logger.error('Failed to extract table')
