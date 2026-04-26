@@ -25,3 +25,8 @@ stenv.sh
 *.jpeg
 *.png
 
+# wx-climate data
+workbench/*.txt
+workbench/*.grib
+workbench/*.csv
+
