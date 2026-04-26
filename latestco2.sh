@@ -1,17 +1,14 @@
 latestco2 ()
 {
     : retrieve latest CO2 readings from Scripps and NOAA Mauna Loa Observatories;
-    : uses: awk, basename, cat, curl, echo, sed, tail;
+    : uses: awk, basename, cat, curl, echo, sed, rm, tail;
     : run:  source latestco2.sh;
     : to see the "canonical format", declare -f latestco2;
     : date: 2020-12-19 -- scripps url updated;
     : date: 2021-02-10 -- display data source as Scripps;
-    : date: 2024-12-31 -- ImageMagick and tesseract updates;
-    : date: 2025-01-24 -- get latest NOAA MLO value;
     : date: 2025-04-22 -- use Scripps MLO ASCII text data file; replace OCR code;
     : date: 2025-04-26 -- make iso_date an internal fn;
     : date: 2025-08-05 -- try NOAA MLO if Scripps fails;
-    : date: 2025-08-16 -- format output
     iso_date() {
 	: convert DD-Mon-YYYY to ISO 8601 format YYYY-MM-DD;
 	set -- $(echo $1 | sed 's/-/ /g')
@@ -39,7 +36,7 @@ latestco2 ()
     else
 	set -- $(cat co2_daily.txt | sed 's/, / /')
 	echo "Latest ($(iso_date ${2})) Scripps Mauna Loa Observatory co2 value: $1 ppm"
-	rm co2_daily.txt
+#	rm co2_daily.txt
     fi
     : retrieve lastest CO2 reading from NOAA Mauna Loa Observatory;
     set -- https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_daily_mlo.txt
