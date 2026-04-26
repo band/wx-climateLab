@@ -1,7 +1,7 @@
 scrippsco2 ()
 {
     : retrieve latest CO2 reading from Scripps Mauna Loa Observatory
-    : uses: curl, echo, head, magick, sed, tesseract
+    : uses: curl, head, magick, rm, sed, tesseract
     : run:  source scrippsco2.sh
     : note: this script OCRs an image file - date of reading not available
     : to see the "canonical format", which scrippsco2

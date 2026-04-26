@@ -1,10 +1,10 @@
 co2trends ()
 {
     : retrieve latest, 1 year ago, and 10 year ago average CO2 trend reading from NOAA;
-    : uses: awk, basename, curl, grep, tail, tr;
+    : uses: awk, basename, curl, grep, tail, rm, tr;
     : run:  source co2trends.sh;
     : to see the "canonical format", declare -f co2trends;
-    : 2025-08-16: --  format output;
+    : 2027-03-27: -- replace ftp site with web page
     #    set -- ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_trend_gl.txt
     set -- https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.txt
     df=$(basename $1)

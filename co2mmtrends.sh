@@ -42,7 +42,7 @@ co2mmtrends ()
           {  printf( fmt, $1, $2, $6 )
           }
 '
-    rm $df
+     rm $df
     return
 }
 co2mmtrends 2> /tmp/.daily.er
