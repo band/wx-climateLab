@@ -13,12 +13,11 @@ logger = logging.getLogger('noaa_table_data')
 
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 
 def extract_table_from_noaa_webpage():
     """
     Extracts the Recent Daily Average Mauna Loa HTML table from NOAA's monthly CO2 trends page.
-    Returns both the raw HTML and the most recent available data (date and value)
+    Returns most recent available data (date and value)
     """
     url = 'https://gml.noaa.gov/ccgg/trends/monthly.html'
     
@@ -28,7 +27,6 @@ def extract_table_from_noaa_webpage():
         response.raise_for_status()  # Raise an error for bad status codes
         # Parse the HTML
         soup = BeautifulSoup(response.text, 'html.parser')
-
         # Find the div with id="main"
         main_div = soup.find('div', id='main')
         if main_div:
@@ -41,7 +39,6 @@ def extract_table_from_noaa_webpage():
                     logger.debug('Table found!')
                     logger.debug('\n--- Table HTML (first 500 chars) ---')
                     logger.debug(str(table)[:500])
-
                     # Extract first row with available data
                     data_row = next((row_data for row in table.find_all('tr')
                                      if len(row_data := [cell.get_text(strip=True) for cell in row.find_all(['td', 'th'])]) >= 2
@@ -58,9 +55,7 @@ def extract_table_from_noaa_webpage():
                 logger.error('colored_box not found in main div')
         else:
             logger.error('main div not found')
-        
         return None
-        
     except requests.exceptions.RequestException as e:
         print(f'Error fetching data: {e}')
         return None
