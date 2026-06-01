@@ -26,5 +26,7 @@ def main():
         print(f"value: {pre.find('div', class_='values').text.strip()}")
         print("___________")
 
+    print(f"Latest {prelims[0].find('dd').text.strip()} monthly CO2 mean value: {prelims[0].find('div', class_='values').text.strip()}")
+
 if __name__ == "__main__":
     exit(main())
