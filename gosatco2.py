@@ -1,29 +1,30 @@
 #!/usr/bin/env python3
 
+import logging, sys
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
+
 import requests
 from bs4 import BeautifulSoup
 
 # URL of the webpage to scrape
 url = 'https://www.gosat.nies.go.jp/en/recent-global-co2.html'
 
-# Send a GET request to the webpage
-response = requests.get(url)
+def main():
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
 
-# Parse the HTML content using BeautifulSoup
-soup = BeautifulSoup(response.content, 'html.parser')
+    # find the soup elements to scrape
+    prelims = soup.find_all("div", class_="preliminary")
 
-# Define the text you want to search for within href attributes
-search_text = '../assets/'
+    logging.info(f"prelims[0]: {prelims[0]}\n")
 
-# Filter function to find <a> tags with specific text in href
-def href_contains_text(tag):
-    return tag.name == 'a' and search_text in tag.get('href', '')
+    for pre in prelims:
+        print(f"pre: {pre}\n")
+        print(pre.find('dt').text.strip())
+        print(f"date: {pre.find('dd').text.strip()}")
+        print(f"value: {pre.find('div', class_='values').text.strip()}")
+        print("___________")
 
-# Use find_all with the filter function
-a_tags = soup.find_all(href_contains_text)
-
-print(len(a_tags))
-# Extract and print the text from each <a> tag that matches the filter
-for tag in a_tags:
-    print(f"\n{tag}")
-
+if __name__ == "__main__":
+    exit(main())
