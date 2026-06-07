@@ -1,11 +1,17 @@
 # climate data functions
 # display co2 and ch4 data
 ghgnow () {
-	echo
-	source ~/bin/latestco2.sh
-	echo
-	source ~/bin/co2trends.sh
-	echo
-	source ~/bin/gosatghg.sh
-	echo
+    : 2026-06-03: GOSAT data needs a Python script
+    echo
+    date -u
+    echo
+    source ~/bin/latestco2.sh
+    echo
+    source ~/bin/co2trends_webdata.sh
+    echo
+    source ~/bin/co2trends.sh
+    echo
+    ~/.local/bin/uv run --with requests --with bs4 gosatghgdata.py
+    echo
 }
+ghgnow
