@@ -16,6 +16,7 @@ import sys
 import zipfile
 
 import cdsapi
+import requests
 
 # Same OSTIA product directory ssthdf.py reads from; new months extend it.
 DATA_DIR = '/Volumes/sandisk4TB/clima_data/793fc0b8'
@@ -68,7 +69,17 @@ def main():
     zip_path = os.path.join(DATA_DIR, f'{year}{month:02d}-download.zip')
     print(f'Requesting {year}-{month:02d} from CDS -> {zip_path}')
     client = cdsapi.Client()
-    client.retrieve(DATASET, request, zip_path)
+    try:
+        client.retrieve(DATASET, request, zip_path)
+    except requests.exceptions.HTTPError as exc:
+        # CDS returns 400 "invalid combination" when a month isn't published
+        # yet. That's the normal "no new data" case, not an error.
+        status = getattr(exc.response, 'status_code', None)
+        if status == 400:
+            print(f'{year}-{month:02d} is not published on CDS yet; '
+                  f'nothing to download.')
+            return 0
+        raise
 
     extracted = []
     with zipfile.ZipFile(zip_path) as z:
