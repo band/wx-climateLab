@@ -72,8 +72,9 @@ def main():
         return 1
     year, month = latest
 
-    report('Latest      ', year, month, find_file(DATA_DIR, year, month))
-    report('One year ago', year - 1, month, find_file(DATA_DIR, year - 1, month))
+    report('Latest       ', year, month, find_file(DATA_DIR, year, month))
+    report('One year ago ', year - 1, month, find_file(DATA_DIR, year - 1, month))
+    report('Ten years ago', year - 10, month, find_file(DATA_DIR, year - 10, month))
     return 0
 
 
