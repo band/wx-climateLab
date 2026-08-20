@@ -16,23 +16,8 @@ nsatrends ()
     parts=("${(s/,/)line}")
     echo $parts
     print $parts[1], $parts[2], $parts[4]
-#    set -- $(tail -n 1 $df) && yr=$1 && mo=$2 && dy=$3
-#    :
-#    grep "$yr $mo $dy " $df | awk '
-#    BEGIN { fmt = "Latest (%s-%02d-%02d) average global co2 trend value (NOAA):\t  %s ppm\n" } 
-#          {  printf( fmt, $1, $2, $3, $5 )
-#          }
-#'
-#    grep "$(($yr-1)) $mo $dy " $df | awk '
-#    BEGIN { fmt = "One year ago (%s-%02d-%02d) average global co2 trend value (NOAA):  %s ppm\n" } 
-#          {  printf( fmt, $1, $2, $3, $5 )
-#          }
-#'
-#    grep "$(($yr-10)) $mo $dy " $df | awk '
-#    BEGIN { fmt = "Ten years ago (%s-%02d-%02d) average global co2 trend value (NOAA): %s ppm\n" } 
-#          {  printf( fmt, $1, $2, $3, $5 )
-#          }
-#'
+    printf "Latest (${parts[1]}) global mean near-surface air temperature value (C3S):  ${parts[2]} degC\n"
+    printf "\t(${parts[1]}) difference from 1991-2020 Mean: ${parts[4]}\n"
 #   rm $df
     return
 }
