@@ -30,5 +30,12 @@ $ curl -q ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_trend_gl.txt > co2_tr
    
 ## 2025-08-14  
  - set up on Codeberg  
+
+## 2026-08-20
+ - will be move from Codeberg (gah!)
  
+ - added `dclib` to reflect including temp as well as GHG data
+ - `nsatrends.sh` for displaying near-surface air temp data
+ 
+
  
