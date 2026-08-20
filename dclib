@@ -1,0 +1,19 @@
+# biblioteca de functiones climáticas
+#
+# display co2, ch4, and surface temperature data
+dcnow () {
+    echo
+    date -u
+    echo
+    print "Greenhouse gas data:\n"
+    source ~/bin/latestco2.sh
+    echo
+    source ~/bin/co2trends_webdata.sh
+    echo
+    ~/.local/bin/uv run --with requests --with bs4 gosatghgdata.py
+#    source ~/bin/nsatrends.sh
+    printf "Air temperature data:\n"
+    source nsatrends.sh
+    echo
+}
+dcnow
