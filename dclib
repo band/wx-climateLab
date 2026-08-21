@@ -11,9 +11,7 @@ dcnow () {
     source ~/bin/co2trends_webdata.sh
     echo
     ~/.local/bin/uv run --with requests --with bs4 gosatghgdata.py
-#    source ~/bin/nsatrends.sh
-    printf "Air temperature data:\n"
-    source nsatrends.sh
+    print "Air temperature data:\n"
+    source ~/bin/nsatrends.sh
     echo
 }
-dcnow
