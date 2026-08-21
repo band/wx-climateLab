@@ -1,7 +1,7 @@
 # biblioteca de functiones climáticas
 #
 # display co2, ch4, and surface temperature data
-dcnow () {
+climad () {
     echo
     date -u
     echo
