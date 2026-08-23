@@ -12,6 +12,9 @@ climad () {
     echo
     ~/.local/bin/uv run --with requests --with bs4 gosatghgdata.py
     print "Air temperature data:\n"
-    source ~/bin/nsatrends.sh
+    source ~/bin/nsatdaily.sh
+    echo
+    print "Sea surface temperature data:\n"
+    source ~/bin/sstdaily.sh
     echo
 }
