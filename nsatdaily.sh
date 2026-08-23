@@ -1,9 +1,9 @@
-nsatrends ()
+nsatdaily ()
 {
-    : retrieve latest, 1 year ago, and 10 year ago near-surface air temperature from C3S;
+    : retrieve latest ERA5 daily near-surface air temperature from C3S CDS;
     : uses: basename, curl, head, tail, rm;
-    : run:  source nsatrends.sh;
-    : to see the "canonical format", declare -f nsatrends;
+    : run:  source nsatdaily.sh;
+    : to see the "canonical format", declare -f nsatdaily;
     set -- https://sites.ecmwf.int/data/climatepulse/data/series/era5_daily_series_2t_global.csv
     local df
     df=${$(basename $1):r}.txt
@@ -14,9 +14,9 @@ nsatrends ()
     : echo $line
     local parts
     parts=("${(s/,/)line}")
-    printf "Latest\t(${parts[1]}) ERA5 global mean near-surface air temperature: ${parts[2]} degC\n"
+    printf "Latest\t(${parts[1]}) ERA5 daily mean near-surface air temperature: ${parts[2]} degC\n"
     printf "\t(${parts[1]}) difference from 1991-2020 mean: ${parts[4]}\n"
     rm $df
     return
 }
-nsatrends 2> /tmp/.daily.er
+nsatdaily 2> /tmp/.daily.er
