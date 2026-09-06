@@ -29,4 +29,4 @@ stenv.sh
 workbench/*.txt
 workbench/*.grib
 workbench/*.csv
-
+workbench/*.json
