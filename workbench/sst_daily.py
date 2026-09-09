@@ -191,6 +191,15 @@ def report(region="nino3.4", feed="current", clim=None, preliminary=False, cache
     values, prelim_from, n_prelim = observed(doc, year, preliminary=preliminary)
     doy = last_day(values)
 
+    # The 1982-2010 baseline carries 365 values in its 366 slots -- slot 366
+    # is null -- so it has no answer on Dec 31 of a leap year. Say so rather
+    # than doing arithmetic on None.
+    if cser["data"][doy - 1] is None:
+        raise SystemExit(
+            f"climatology {cser['name']!r} has no value for day {doy}; "
+            "try --clim 1991-2020"
+        )
+
     have = {d.get("name") for d in doc}
     band = None
     if {PLUS_2S, MINUS_2S} <= have:
