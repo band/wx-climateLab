@@ -19,6 +19,13 @@ stenv.sh
 .env
 *.secret
 
+# archives
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tar.xz
+*.zip
+
 # misc data files
 *.wav
 *.au
