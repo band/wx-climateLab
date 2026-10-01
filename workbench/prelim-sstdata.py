@@ -25,7 +25,6 @@ def main():
         resp=urllib.request.urlopen(req,timeout=60)
         raw=resp.read().decode("utf-8")
         doc=json.loads(raw)
-        print(doc[-1].keys())
     except Exception as e:
         traceback.print_exc(e)
         logging.error(f"Error: {e}")
@@ -35,17 +34,15 @@ def main():
     last_idx = next((i for i in range(len(predata) - 1, -1, -1) if predata[i] is not None), None)
 #    print(first_idx, last_idx)
 
-    print(f"\nLatest date: {daynum_to_date(2026, last_idx)}")
-
     data26=[l.get('data') for l in doc if l.get('name') == '2026'][0]
-    climd=[l.get('data') for l in doc if l.get('name') == '1991-2020'][0]
-    print(f"    latest sst: {predata[last_idx]}")
-    print(f"    climatology: {climd[last_idx]}")
-    print(f"    diff from climatology: {predata[last_idx] - climd[last_idx]}")
+    climatology=[l.get('data') for l in doc if l.get('name') == '1991-2020'][0]
+
+    print(f"NOAA OISST v2.1 Niño 3.4 preliminary SST data:\n")
+    print(f"Latest date        :  {daynum_to_date(2026, last_idx)}")
+    print(f"latest SST         :  {predata[last_idx]} degC")
+    print(f"climatology        :  {climatology[last_idx]}")
+    print(f"anomaly            :  {predata[last_idx] - climatology[last_idx]}")
 
 if __name__ == "__main__":
     exit(main())
-
-
-
 
