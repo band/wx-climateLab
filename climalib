@@ -17,4 +17,6 @@ climad () {
     print "Sea surface temperature data:\n"
     source ~/bin/sstdaily.sh
     echo
+    ~/.local/bin/uv run prelim-sstdata.py
+    echo
 }
