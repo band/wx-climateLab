@@ -41,7 +41,7 @@ def main():
     print(f"Latest date        :  {daynum_to_date(2026, last_idx)}")
     print(f"latest SST         :  {predata[last_idx]} degC")
     print(f"climatology        :  {climatology[last_idx]}")
-    print(f"anomaly            :  {predata[last_idx] - climatology[last_idx]}")
+    print(f"anomaly            :  {predata[last_idx] - climatology[last_idx]:.3f}")
 
 if __name__ == "__main__":
     exit(main())
