@@ -26,8 +26,9 @@ def main():
         raw=resp.read().decode("utf-8")
         doc=json.loads(raw)
     except Exception as e:
-        traceback.print_exc(e)
+        traceback.print_exc()
         logging.error(f"Error: {e}")
+        return 1
         
     predata=[l.get('data') for l in doc if l.get('name') == 'Preliminary'][0]
     first_idx = next((i for i, v in enumerate(predata) if v is not None), None)
