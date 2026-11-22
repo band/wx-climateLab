@@ -4,7 +4,7 @@ nsatdaily ()
     : uses: basename, curl, grep, rm, tail;
     : run:  source nsatdaily.sh;
     : to see the "canonical format", declare -f nsatdaily;
-    set -- https://sites.ecmwf.int/data/climatepulse/data/series/era5_daily_series_2t_global.csv
+    set -- https://sites.ecmwf.int/data/climatepulse/timeseries/csv/daily/timeseries_era5_t2m_daily_global.csv
     local df
     df=${$(basename $1):r}.txt
     :debug $df
@@ -17,10 +17,10 @@ nsatdaily ()
     parts=("${(s/,/)line}")
     printf "Latest\t(${parts[1]}) ERA5 daily mean near-surface air temperature: ${parts[2]} degC\n"
     printf "\t(${parts[1]}) difference from 1991-2020 mean: ${parts[4]}\n"
-    : 1850-1900 offset: C3S defines the 1850-1900 global mean as 0.88 degC below 1991-2020;
-    : a fixed constant, not in the data file - 0.19 ERA5 1991-2020 minus 1981-2010, plus 0.01 for IPCC AR6;
-    : source: https://climate.copernicus.eu/climate-indicators/about-data#Temperatureindicator;
-    printf "\t(${parts[1]}) difference from 1850-1900 mean: %.3f\n" $(( parts[4] + 0.88 ))
+    : columns: date,t2m,clim_1991_2020,anom_1991_2020,offset_1850_1900,anom_1850_1900,status;
+    : the file starts with "#" comment lines - the FINAL grep above skips them;
+    : anom_1850_1900 is computed by C3S as anom_1991_2020 + a per-day offset_1850_1900;
+    printf "\t(${parts[1]}) difference from 1850-1900 mean: ${parts[6]}\n"
     rm $df
     return
 }
